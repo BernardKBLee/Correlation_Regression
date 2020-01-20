@@ -1,0 +1,126 @@
+---
+title: "Correlation_Regression"
+author: "Bernard Lee"
+date: '2020-01-20'
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+editor_options:
+  chunk_output_type: inline
+---
+
+#### Load library
+```{r}
+library(tidyverse)
+library(openintro)
+```
+
+## ncbirths scatterplot
+#### Scatterplot of weight vs. weeks
+```{r}
+ggplot(data = ncbirths, aes(x = weeks, y = weight)) +
+  geom_point() +
+  theme_bw() +
+  theme(aspect.ratio = 1)
+```
+
+#### Boxplot of weight vs. weeks
+```{r}
+ggplot(ncbirths, aes(x = cut(weeks, breaks = 5), y = weight)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(aspect.ratio = 1)
+```
+
+# Mammals scatterplot
+```{r}
+# Weird scatterplot
+ggplot(data = mammals, aes(x = BodyWt, y = BrainWt)) +
+  geom_point() +
+  theme_bw() +
+  theme(aspect.ratio = 1)
+
+# Scatterplot with coord_trans()
+ggplot(data = mammals, aes(x = BodyWt, y = BrainWt)) +
+  geom_point() + 
+  coord_trans(x = "log10", y = "log10") +
+  theme_bw() +
+  theme(aspect.ratio = 1)
+
+# Scatterplot with scale_x_log10() and scale_y_log10()
+ggplot(data = mammals, aes(x = BodyWt, y = BrainWt)) +
+  geom_point() +
+  scale_x_log10() + 
+  scale_y_log10() +
+  theme_bw() +
+  theme(aspect.ratio = 1)
+```
+
+## Baseball player scatterplot
+```{r}
+ggplot(mlbBat10, aes(x = OBP, y = SLG)) +
+  geom_point() +
+  theme_bw() +
+  theme(aspect.ratio = 1)
+```
+
+## Body dimensions scatterplot
+```{r}
+str(bdims$sex)
+
+ggplot(bdims, aes(x = hgt, y = wgt, color = factor(sex))) +
+  geom_point() +
+  theme_bw() +
+  theme(aspect.ratio = 1)
+```
+
+## Smoking scatterplot
+```{r}
+ggplot(smoking, aes(x = age, y = amtWeekdays)) +
+  geom_point() +
+  theme_bw() +
+  theme(aspect.ratio = 1)
+```
+
+## Identifying outliers
+```{r}
+# Filter for AB greater than or equal to 200
+ab_gt_200 <- mlbBat10 %>%
+  filter(AB >= 200) 
+
+# Scatterplot of SLG vs. OBP
+ggplot(ab_gt_200, aes(x = OBP, y = SLG)) +
+  geom_point() +
+  theme_bw() +
+  theme(aspect.ratio = 1)
+
+# Identify the outlying player
+ab_gt_200 %>%
+  filter(OBP < 0.200)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
